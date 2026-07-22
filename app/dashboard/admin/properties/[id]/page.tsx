@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
-import { SiteHeader } from "@/components/site-header"
 import { PropertyDetail } from "@/components/property-detail"
 import { propertyService } from "@/lib/server/services/property.service"
-import type { Property } from "@/lib/types"
 import { HttpError } from "@/lib/server/http"
+import type { Property } from "@/lib/types"
 
+// Admin preview of a listing that stays inside the dashboard sidebar shell
+// (the /dashboard layout wraps this route), instead of bouncing to the public
+// site-header page.
 export const dynamic = "force-dynamic"
 
 async function load(id: string): Promise<Property | null> {
@@ -24,10 +26,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params
   const property = await load(id)
-  return { title: property?.title ?? "Listing not found" }
+  return { title: property ? `${property.title} · Admin` : "Listing not found" }
 }
 
-export default async function PropertyDetailPage({
+export default async function AdminPropertyDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>
@@ -36,12 +38,5 @@ export default async function PropertyDetailPage({
   const property = await load(id)
   if (!property) notFound()
 
-  return (
-    <>
-      <SiteHeader />
-      <main className="mx-auto max-w-6xl px-4 py-8">
-        <PropertyDetail property={property} backHref="/listings" backLabel="Back to listings" />
-      </main>
-    </>
-  )
+  return <PropertyDetail property={property} backHref="/dashboard/admin" backLabel="Back to console" />
 }
