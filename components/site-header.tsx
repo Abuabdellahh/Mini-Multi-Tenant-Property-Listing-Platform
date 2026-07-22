@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -80,12 +81,14 @@ export function SiteHeader() {
                 }
               />
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel className="flex flex-col">
-                  <span className="truncate">{user.name ?? "Account"}</span>
-                  <span className="text-xs font-normal text-muted-foreground">
-                    {user.email} · {roleLabel}
-                  </span>
-                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="flex flex-col">
+                    <span className="truncate">{user.name ?? "Account"}</span>
+                    <span className="text-xs font-normal text-muted-foreground">
+                      {user.email} · {roleLabel}
+                    </span>
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem render={<Link href={dashboardPath()} />}>
                   {user.role === "ADMIN" ? (
