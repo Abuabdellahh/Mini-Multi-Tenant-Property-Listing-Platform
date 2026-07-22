@@ -1,0 +1,23 @@
+node_modules
+.next
+.git
+.gitignore
+.vercel
+.snowflake
+.v0-trash
+npm-debug.log*
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Env files — never bake secrets into the image
+.env
+.env.*
+!.env.example
+
+# v0 sandbox internal files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+
+.DS_Store
